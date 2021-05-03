@@ -32,12 +32,14 @@ async def on_ready():
     print(f'{bot.user} has connected to Discord!')
 #command for rolling any number of multisided dice.     
 @bot.command(
-    help = "Use roll with 2 positive integers to foll a specific number of multisided dice. First number will be the number of dice. Second will be the number of sides of the dice."
+    help = "Use roll with 2 positive integers to roll a specific number of multisided dice. First number will be the number of dice. Second will be the number of sides of the dice."
     )
 async def roll(ctx, arg1=None, arg2=None):  
+    text = ""
     if (arg1.isnumeric() and arg2.isnumeric() and int(arg1) > 0 and int(arg2) > 0):
         for x in range(0, int(arg1)):
-            await ctx.send(random.randint(1, int(arg2)))
+           text = text + "{} ".format(random.randint(1, int(arg2)))
+        await ctx.send(text)
     elif arg2 == None:
         await ctx.send("Must have 2 positive integers as input. Please try again.")
     else:
@@ -236,8 +238,8 @@ async def lookup(ctx, info):
         await ctx.send("Weapons Table")
         text = ""
         for items in range(len(weapons)):
-           text = text + "{} - {}".format(weapons[items], weapondice[items]) + "|n"
-        ctx.send(text)
+           text = text + "{} - {}".format(weapons[items], weapondice[items]) + "\n"
+        await ctx.send(text)
         
     elif info == "wildmagic":
         await ctx.send("Wild Magic Table")
